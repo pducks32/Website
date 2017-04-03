@@ -1,0 +1,199 @@
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+class Radians {
+  static fromDegrees(degrees) {
+    return degrees * Math.PI / 180;
+  }
+}
+
+class RelativePosition {
+  constructor({width, height, deltas, angle = 0}) {
+    this.width = width;
+    this.height = height;
+    this.angle = angle;
+    this.deltas = deltas;
+  }
+
+  from({width, height}) {
+    return {
+      x: this.calculateRelativePoint(width, this.deltas.x, this.width, Math.sin(this.angle)),
+      y: this.calculateRelativePoint(height, this.deltas.y, this.height, Math.cos(this.angle))
+    }
+  }
+
+  calculateRelativePoint(anchorValue, delta, objectValue, difference) {
+    return (anchorValue * delta) + (objectValue * difference);
+  }
+}
+
+class Ball {
+  constructor({x, y, radius, restitution, mass, styles}) {
+    return Physics.body('circle', {
+      x, y,
+      radius,
+      restitution,
+      mass,
+      styles
+    });
+  }
+}
+
+class Rectangle {
+  constructor({x, y, angle, width, height, mass, ...other}) {
+    return Physics.body('rectangle', {
+      x,
+      y,
+      angle,
+      width,
+      height,
+      mass,
+      ...other
+    })
+  }
+}
+
+class TopLeftFixedRectangle extends Rectangle {
+  constructor(args) {
+    let {position, ...props} = args;
+    let point = new RelativePosition({
+      width: props.width,
+      height: props.height,
+      angle: props.angle,
+      deltas: {
+        x: position.left,
+        y: position.top,
+      }
+    });
+    let {x, y} = point.from(position.from);
+    return super({treatment: "static", x, y, ...props});
+  }
+}
+
+class TopRightFixedRectangle extends Rectangle {
+  constructor(args) {
+    let {position, ...props} = args;
+    let point = new RelativePosition({
+      width: props.width,
+      height: props.height,
+      angle: props.angle,
+      deltas: {
+        x: 1 - position.right,
+        y: position.top,
+      }
+    });
+    let {x, y} = point.from(position.from);
+    return super({treatment: "static", x, y, ...props});
+  }
+}
+
+class LanguageBall extends Ball {
+  constructor({text, ballOpts}) {
+    let properSrc = `https://s3-us-west-2.amazonaws.com/s.cdpn.io/103968/${text}_ball.svg`
+    let defaults = {
+      x: 0,
+      y: 0,
+      radius: 30,
+      restitution: (getRandomInt(25, 75) / 100),
+      mass: 2,
+      styles: {
+        src: properSrc
+      }
+    };
+    return super(...defaults);
+  }
+}
+
+window.physicsWorld = Physics(function (world) {
+
+  // create a renderer
+  let renderer = Physics.renderer('canvas', {
+    el: 'viewport'
+  });
+  // add the renderer
+  world.add(renderer);
+  
+  // render on each step
+  world.on('step', function () {
+    world.render();
+  });
+  
+  // constrain objects to these bounds
+  let edgeBounce = Physics.behavior('edge-collision-detection', {
+    aabb: Physics.aabb(0, -100, window.innerWidth, window.innerHeight),
+    restitution: 0.99,
+    cof: 0.8
+  });
+
+  // resize events
+  window.addEventListener('resize', function () {
+    edgeBounce.setAABB(Physics.aabb(0, 0, renderer.width, renderer.height));
+  }, true);
+
+  let languages = ["ruby", "swift", "js", "css", "html"];
+  setInterval(function(){
+    world.add(new LanguageBall({text: languages[getRandomInt(0, languages.length)]}));
+  }, 2000);
+
+  world.add( new TopLeftFixedRectangle({
+    width: renderer.width * 0.5,
+    height: 40,
+    angle: Radians.fromDegrees(20),
+    mass: 60,
+    position: {
+      top: 0.15,
+      left: 0,
+      from: renderer
+    },
+    styles: {
+      fillStyle: "#34495e"
+    }
+  }));
+  
+  world.add( new TopLeftFixedRectangle({
+    width: renderer.width * 0.7,
+    height: 40,
+    angle: Radians.fromDegrees(10),
+    mass: 60,
+    position: {
+      top: 0.85,
+      left: 0.2,
+      from: renderer
+    },
+    styles: {
+      fillStyle: "#34495e"
+    }
+  }));
+
+  world.add( new TopRightFixedRectangle({
+    width: renderer.width * 0.55,
+    height: 40,
+    angle: Radians.fromDegrees(-18),
+    mass: 60,
+    position: {
+      top: 0.45,
+      right: 0.15,
+      from: renderer
+    },
+    styles: {
+      fillStyle: "#34495e"
+    }
+  }));
+
+  // add things to the world
+  world.add([
+    Physics.behavior('interactive', { el: renderer.container }),
+    Physics.behavior('constant-acceleration'),
+    Physics.behavior('body-impulse-response'),
+    Physics.behavior('body-collision-detection'),
+    Physics.behavior('sweep-prune'),
+    edgeBounce
+  ]);
+
+  // subscribe to ticker to advance the simulation
+  Physics.util.ticker.on(function( time ) {
+    world.step( time );
+  });
+
+});

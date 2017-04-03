@@ -1,0 +1,35 @@
+@import "../variables";
+@mixin social-hover($color) {
+  &:hover, &:focus, &:active {
+    background-color: lighten($color, 15%);
+  }
+}
+.social-boxes {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: stretch;
+  align-content: stretch;
+  .social-box {
+    flex-grow: 1;
+    text-align: center;
+    min-width: 4em;
+  }
+  .box--mail {
+    background-color: $html-color;
+    @include social-hover($html-color);
+  }
+  .box--twitter {
+    background-color: #55ACEE;
+    @include social-hover(#55ACEE);
+  }
+  .box--github {
+    background-color: #aaa;
+    @include social-hover(#aaa);
+  }
+  .box--codepen {
+    background-color: #333;
+    @include social-hover(#333);
+  }
+}

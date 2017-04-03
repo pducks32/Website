@@ -1,0 +1,41 @@
+@import "../variables";
+@mixin monster-color($color-name, $color) {
+  .monster--#{$color-name} & {
+    fill: $color;
+    stroke: darken($color, 15%);
+  }
+}
+.monster {
+  &-body {
+    @include monster-color("ruby", $ruby-color);
+    @include monster-color("html", $html-color);
+    @include monster-color("js", $js-color);
+    @include monster-color("css", $css-color);
+    @include monster-color("php", $php-color);
+    @include monster-color("objectc", $objectc-color);
+    fill: lightgrey;
+    stroke: grey;
+    stroke-width: 0.5em;
+    stroke-linecap: round;
+  }
+  &-eye {
+    fill: white;
+    fill-opacity: 0.8;
+  }
+  &-mouth {
+    stroke: black;
+    stroke-width: 8;
+    stroke-linecap: round;
+    fill-opacity: 0;
+  }
+}
+.monster-slider {
+  width: 45%;
+  float: left;
+  svg {
+    display: block;
+    width: 90%;
+    text-align: center;
+    margin: 0 auto;
+  }
+}

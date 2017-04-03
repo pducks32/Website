@@ -1,0 +1,93 @@
+@import "reset";
+@import "variables";
+@import "typography";
+@import "modules/modules";
+@import "animation";
+
+body {
+    background: #fafafa;
+    font-family: $helvetica-neue-family;
+    color: #333;
+    font-size: 150%;
+}
+
+
+footer {
+  background-color: $midnight-blue;
+  //padding: 1em 0;
+}
+
+.browsehappy {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+.visually-hidden {
+  display: none;
+}
+
+.highlight {
+ &--js {
+   color: $js-color;
+ }
+
+ &--html {
+   color: $html-color;
+ }
+}
+
+#languages-ramp {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  margin-top: -4.5em;
+
+  align-items: center;
+  align-content: center;
+
+  @media screen and (max-width: 50em) {
+    margin-top: 0;
+    height: auto;
+    min-height: auto;
+  }
+}
+
+#languages-ramp-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+
+  @media screen and (max-width: 50em) {
+    opacity: 0.2;
+  }
+}
+
+.langauges-ramp-text {
+  z-index: 9999;
+  width: 50vw;
+  margin-left: auto;
+  padding: 3em;
+
+  p {
+    padding-bottom: 1em;
+  }
+
+  abbr {
+    font-weight: bold;
+  }
+
+  @media screen and (max-width: 50em) {
+    padding-top: 2em;
+    width: 100%;
+  }
+
+  @media screen and (max-width: 35em) {
+    padding-top: 2em;
+    padding: 0.75em;
+    width: 100%;
+  }
+}

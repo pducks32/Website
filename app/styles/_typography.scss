@@ -1,0 +1,27 @@
+@import "variables";
+h1 { font-size: 2.25em;  /* 16x2.25=36 */ }
+h2 { font-size: 1.5em;   /* 16x1.5=24 */ }
+h3 { font-size: 1.125em; /* 16x1.125=18 */ }
+h4 { font-size: 0.875em; /* 16x0.875=14 */ }
+p, li, span  { font-size: 0.75em;  /* 16x0.75=12 */ }
+#{$headers} {
+  font-family: $headers-font-family;
+  line-height: 1.4;
+}
+
+p {
+  font-family: $body-font-family;
+  line-height: 1.6;
+}
+
+h2:not(.info-title) {
+  text-align: center;
+  color: $midnight-blue;
+  padding-bottom: 0.4em;
+}
+i, i::before, i::after {
+  color: #fafafa;
+}
+i {
+  padding: 0.2em;
+}

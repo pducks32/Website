@@ -1,0 +1,114 @@
+@import "../variables";
+#languages {
+  width: 80%;
+  max-width: 40em;
+  margin: 1.4em auto;
+  padding: 0 1em;
+
+  @media screen and (max-width: 40em) {
+    width: 100%;
+
+    padding: 0 1em;
+  }
+}
+.info_slider {
+  width: 50%;
+  margin-left: 0.5em;
+  float: right;
+}
+.language-slider {
+  &::after {
+    content: " ";
+    display: table;
+    clear: both;
+    visibility: hidden;
+  }
+}
+@mixin info-color($color-name, $color) {
+  &--#{$color-name} {
+    .info-title {
+      color: $color;
+      border-color: $color;
+    }
+    .info-point::before {
+      color: $color;
+    }
+  }
+  .pill--#{$color-name} {
+    background-color: $color;
+  }
+}
+.info_card {
+
+  .info-title {
+    margin-top: 0.5em;
+    color: grey;
+    border-bottom: 2px solid grey;
+  }
+
+  @include info-color("ruby", $ruby-color);
+  @include info-color("html", $html-color);
+  @include info-color("css", $css-color);
+  @include info-color("js", $js-color);
+  @include info-color("ruby", $ruby-color);
+  @include info-color("php", $php-color);
+  @include info-color("objectc", $objectc-color);
+
+  .info-points {
+    list-style: none;
+    margin: 0.75em 1.75em;
+    .info-point::before {
+      content:"\2022";
+      font-size:1.5em;
+      padding-right:.25em;
+      position:relative;
+      top:.1em;
+    }
+  }
+}
+@media screen and (max-width: 60em) {
+  .monster-slider {
+    svg {
+      width: 100%;
+    }
+  }
+  #languages {
+    padding: 0 0.25em;
+    width: 90%;
+  }
+}
+@media screen and (max-width: 40em) {
+  .info_slider, .monster-slider {
+    display: block;
+    float: none;
+    width: 100%;
+  }
+  .info_slider {
+    margin: 0;
+    margin-top: -1em;
+  }
+  .info_card {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .info-title {
+    text-align: center;
+  }
+  .monster-slider {
+    svg {
+      width: 70%;
+    }
+  }
+  .info-points {
+    list-style: none;
+    margin: 0.5em 0.5em !important;
+  }
+}
+@media screen and (max-width: 30em) {
+  .monster-slider {
+    svg {
+      width: 90%;
+    }
+  }
+}

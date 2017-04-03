@@ -1,0 +1,51 @@
+@import "../variables";
+.hero {
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  background-color: $midnight-blue;
+  font-size: 1.4em;
+  text-align: center;
+  padding-top: 2em;
+
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: stretch;
+
+  &-title {
+    font-family: $conqueror-family;
+    color: white;
+
+    &::first-line {
+      font-size: 1.25em;
+      line-height: 0.2;
+    }
+  }
+  &-svg-planet {
+    display: block;
+    margin: 0 auto;
+    max-width: 15em;
+    animation-name: floating;
+    animation-duration: 3s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+}
+@media screen and (max-width: 60em) {
+  .hero {
+    font-size: 1.2em;
+  }
+}
+@media screen and (max-width: 30em) {
+  .hero {
+    font-size: 1em;
+  }
+  .hero-svg-planet {
+    width: 100%;
+  }
+  .hero-title {
+    &::first-line {
+      font-size: 1em;
+    }
+  }
+}
