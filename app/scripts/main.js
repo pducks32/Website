@@ -219,7 +219,7 @@ window.physicsWorld = Physics(function (world) {
 
   // constrain objects to these bounds
   var edgeBounce = Physics.behavior('edge-collision-detection', {
-    aabb: Physics.aabb(0, -100, renderer.width, renderer.height),
+    aabb: Physics.aabb(0, 0, renderer.width, renderer.height),
     restitution: 0.99,
     cof: 0.8
   });
@@ -229,12 +229,16 @@ window.physicsWorld = Physics(function (world) {
     edgeBounce.setAABB(Physics.aabb(0, 0, renderer.width, renderer.height));
   }, true);
 
-  var languages = ["ruby", "swift", "js", "css", "html"];
+	setTimeout(function () {
+		edgeBounce.setAABB(Physics.aabb(0, 0, renderer.width, renderer.height));
+	}, 2000);
+
+  var languages = ["ruby", "swift", "js", "rust", "html"];
 	var numberOfBalls = 0;
 	var addBallInterval = setInterval(function () {
 		world.add(new LanguageBall({ text: languages[getRandomInt(0, languages.length)] }));
 		numberOfBalls++
-		if (numberOfBalls > 20) {
+		if (numberOfBalls > 15) {
 			window.clearInterval(addBallInterval);
 		}
 	}, 2000);
