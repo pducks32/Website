@@ -32,4 +32,9 @@
     background-color: #333;
     @include social-hover(#333);
   }
+
+  .box--linkedin {
+    background-color: #333;
+    @include social-hover(#333);
+  }
 }
