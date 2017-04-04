@@ -219,7 +219,7 @@ window.physicsWorld = Physics(function (world) {
 
   // constrain objects to these bounds
   var edgeBounce = Physics.behavior('edge-collision-detection', {
-    aabb: Physics.aabb(0, 0, renderer.width, renderer.height),
+    aabb: Physics.aabb(0, -100, renderer.width, renderer.height),
     restitution: 0.99,
     cof: 0.8
   });

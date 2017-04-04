@@ -9,6 +9,7 @@ body {
     font-family: $helvetica-neue-family;
     color: #333;
     font-size: 150%;
+    overflow-x: hidden;
 }
 
 
@@ -41,12 +42,13 @@ footer {
   position: relative;
   display: flex;
   min-height: 100vh;
+  height: 100vh;
   margin-top: -4.5em;
-
+  overflow: hidden;
   align-items: center;
   align-content: center;
 
-  @media screen and (max-width: 50em) {
+  @media screen and (max-width: 55em) {
     margin-top: 0;
     height: auto;
     min-height: auto;

@@ -7,14 +7,15 @@
 .social-boxes {
   list-style: none;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: space-around;
   align-items: stretch;
   align-content: stretch;
+  font-size: 0.75em;
   .social-box {
     flex-grow: 1;
     text-align: center;
-    min-width: 4em;
+    min-width: 2em;
   }
   .box--mail {
     background-color: $html-color;
@@ -34,7 +35,11 @@
   }
 
   .box--linkedin {
-    background-color: #333;
-    @include social-hover(#333);
+    //background-color: #333;
+    //@include social-hover(#333);
+  }
+
+  @media screen and (max-width: 45em) {
+    font-size: 0.5em;
   }
 }
